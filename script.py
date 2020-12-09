@@ -69,7 +69,10 @@ for follower in profile.get_followers():
     username = follower.username
     followers = follower.followers
     followees = follower.followees
-    ratio = followees / followers
+    if followers != 0:
+        ratio = followees / followers
+    else:
+        ratio = 'bot'
     ifollow = 'yes' if username in list_of_followees else 'no'
 
     sheet.cell(row, 1).value = row-1
@@ -81,7 +84,7 @@ for follower in profile.get_followers():
 
     row += 1
 
-    time.sleep(random.randint(5,15))
+    time.sleep(random.randint(3,7))
 
 # saving book
 
