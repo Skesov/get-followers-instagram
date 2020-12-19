@@ -67,7 +67,9 @@ for followee in profile.get_followees():
 row = 2
 for follower in profile.get_followers():
     username = follower.username
+    time.sleep(5)
     followers = follower.followers
+    time.sleep(7)
     followees = follower.followees
     if followers != 0:
         ratio = followees / followers
@@ -84,7 +86,7 @@ for follower in profile.get_followers():
 
     row += 1
 
-    time.sleep(random.randint(3,7))
+    time.sleep(30)
 
 # saving book
 
