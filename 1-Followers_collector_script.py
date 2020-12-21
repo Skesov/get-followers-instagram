@@ -3,7 +3,6 @@ import instaloader
 import openpyxl
 import os
 import time
-import random
 
 load_dotenv()
 
@@ -41,54 +40,57 @@ book = openpyxl.Workbook()
 sheet = book.active
 sheet = book.create_sheet('Followers', 0)
 sheet.column_dimensions['A'].width = 10
-sheet.column_dimensions['B'].width = 40
-sheet.column_dimensions['C'].width = 40
-sheet.column_dimensions['D'].width = 30
-sheet.column_dimensions['E'].width = 30
+sheet.column_dimensions['B'].width = 25
+sheet.column_dimensions['C'].width = 30
+sheet.column_dimensions['D'].width = 15
+sheet.column_dimensions['E'].width = 10
 sheet.column_dimensions['F'].width = 10
+sheet.column_dimensions['G'].width = 20
+sheet.column_dimensions['H'].width = 10
+sheet.column_dimensions['I'].width = 15
+
 
 # Creating a first row with titles
 sheet.cell(1, 1).value = '№'
 sheet.cell(1, 2).value = 'Username'
-sheet.cell(1, 3).value = 'Followers'
-sheet.cell(1, 4).value = 'Followees'
-sheet.cell(1, 5).value = 'Followee/Folowers'
-sheet.cell(1, 6).value = 'I follow'
+sheet.cell(1, 3).value = 'Fullname'
+sheet.cell(1, 4).value = 'Posts'
+sheet.cell(1, 5).value = 'Followers'
+sheet.cell(1, 6).value = 'Followees'
+sheet.cell(1, 7).value = 'Followee/Folowers'
+sheet.cell(1, 8).value = 'I follow'
+sheet.cell(1, 9).value = 'ID'
 
 
 # collecting folowees
-# list_of_followees = []
+print(f'Collecting followees')
+list_of_followees = []
 
-# for followee in profile.get_followees():
-#     list_of_followees.append(followee.username)
+for followee in profile.get_followees():
+    list_of_followees.append(followee.username)
+
+
+print(f'Followees collected')
 
 # collecting folowers and writing information to file
 row = 2
+print(f'collecting followers')
 for follower in profile.get_followers():
+    print(f'Working with follower #{row-1}')
     username = follower.username
-    # time.sleep(5)
-    # followers = follower.followers
-    # time.sleep(7)
-    # followees = follower.followees
-    # if followers != 0:
-    #     ratio = followees / followers
-    # else:
-    #     ratio = 'bot'
-    # ifollow = 'yes' if username in list_of_followees else 'no'
+    ifollow = 'yes' if username in list_of_followees else 'no'
 
     sheet.cell(row, 1).value = row-1
     sheet.cell(row, 2).value = username
-    # sheet.cell(row, 3).value = followers
-    # sheet.cell(row, 4).value = followees
-    # sheet.cell(row, 5).value = ratio
-    # sheet.cell(row, 6).value = ifollow
+    sheet.cell(row, 8).value = ifollow
 
     row += 1
 
-    # time.sleep(30)
+print(f'Followers collected')
+
 
 # saving book
-
+print(f'Saving {followers_filename}.xlsx in {path_to_save}')
 book.save(path_to_save + "/" + followers_filename)
 
 print("\n __________")
