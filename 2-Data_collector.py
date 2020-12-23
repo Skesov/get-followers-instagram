@@ -70,7 +70,7 @@ while row < row_count:
             sheet.cell(row, 9).value = profileID
 
             # saving book
-            timer=randint(15, 25)
+            timer = randint(15, 35)
             print(f'Saving book. Go to next line in {timer} seconds')
             book.save(fullpath)
             time.sleep(timer)
@@ -88,17 +88,32 @@ while row < row_count:
                 time.sleep(20)
                 row += 1
             elif isinstance(error, instaloader.exceptions.ConnectionException):
-                print('Connection exception Waiting one hour.')
-                time.sleep(3600)
+                sleep_timer = randint(2000, 3600)
+                current_time = time.mktime(time.localtime())
+                added_time = time.localtime(current_time + sleep_timer)
+                time_retring = time.strftime("%H:%M:%S", added_time)
+
+                print(
+                    f'Connection exception Waiting {int(sleep_timer / 60)} minutes.')
+                print(f'The request will be retried at {time_retring}')
+                time.sleep(sleep_timer)
+
+            elif isinstance(error, instaloader.exceptions.QueryReturnedBadRequestException):
+                print('Blocked account. Need actions on instagram page.')
+                retry = input('Input anything for retry')
+
             else:
-                print('\nWaiting 30 minutes')
-                time.sleep(1800)
+                sleep_timer = randint(1500, 2000)
+                current_time = time.mktime(time.localtime())
+                added_time = time.localtime(current_time + sleep_timer)
+                time_retring = time.strftime("%H:%M:%S", added_time)
+
+                print(f'\nWaiting {time_retring} minutes')
+                time.sleep(sleep_timer)
 
     else:
         print('Data is exist. Next line')
         row += 1
-
-
 
 
 print("\n__________")
