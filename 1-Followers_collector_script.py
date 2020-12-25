@@ -1,8 +1,9 @@
-from dotenv import load_dotenv
-import instaloader
-import openpyxl
 import os
 import time
+
+import instaloader
+import openpyxl
+from dotenv import load_dotenv
 
 load_dotenv()
 

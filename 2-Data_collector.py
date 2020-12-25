@@ -1,9 +1,10 @@
-from dotenv import load_dotenv
-import instaloader
-import openpyxl
 import os
 import time
 from random import randint
+
+import instaloader
+import openpyxl
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -45,7 +46,7 @@ print(f'{row_count-1} followers')
 
 row = 2
 
-while row < row_count:
+while row <= row_count:
     username = sheet.cell(row, 2).value
     print(f'Read information about {username} in line {row-1}')
     if sheet.cell(row, 5).value == None:
@@ -88,7 +89,7 @@ while row < row_count:
                 time.sleep(20)
                 row += 1
             elif isinstance(error, instaloader.exceptions.ConnectionException):
-                sleep_timer = randint(2000, 3600)
+                sleep_timer = randint(2700, 4000)
                 current_time = time.mktime(time.localtime())
                 added_time = time.localtime(current_time + sleep_timer)
                 time_retring = time.strftime("%H:%M:%S", added_time)
